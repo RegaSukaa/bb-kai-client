@@ -39,6 +39,7 @@ class WebBridge(val context: Context, val prefs: SitePrefs) {
     init {
         setup()
         Companion.current = this
+        if (BuildConfig.DEBUG) WebView.setWebContentsDebuggingEnabled(true)
     }
 
     private fun setup() {
@@ -93,14 +94,21 @@ class WebBridge(val context: Context, val prefs: SitePrefs) {
                 url != null && handleUrl(Uri.parse(url))
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
+                android.util.Log.w("BbKai", "onPageStarted $url")
                 onProgress(0)
                 sync()
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
+                android.util.Log.w("BbKai", "onPageFinished $url")
                 sync()
                 if (!url.isNullOrBlank() && Site.isOwnHost(url)) prefs.lastUrl = url
                 checkPdf(view, url)
+            }
+
+            override fun onPageCommitVisible(view: WebView?, url: String?) {
+                // контент реально отрисован — значит ошибки нет и оверлей надо убрать
+                onPageError(null)
             }
 
             override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
@@ -113,7 +121,24 @@ class WebBridge(val context: Context, val prefs: SitePrefs) {
                 error: android.webkit.WebResourceError?,
             ) {
                 if (request?.isForMainFrame == true) {
+                    android.util.Log.w(
+                        "BbKai",
+                        "onReceivedError code=${error?.errorCode} desc=${error?.description} url=${request.url}",
+                    )
                     onPageError(error?.description?.toString().orEmpty())
+                }
+            }
+
+            override fun onReceivedHttpError(
+                view: WebView?,
+                request: WebResourceRequest?,
+                errorResponse: android.webkit.WebResourceResponse?,
+            ) {
+                if (request?.isForMainFrame == true) {
+                    android.util.Log.w(
+                        "BbKai",
+                        "onReceivedHttpError ${errorResponse?.statusCode} url=${request.url}",
+                    )
                 }
             }
 

@@ -12,8 +12,8 @@ android {
         applicationId = "ru.kai.bb"
         minSdk = 29
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
         buildConfigField("String", "SITE_URL", "\"https://bb.kai.ru\"")
         // заполняется ссылкой на APK перед релизом (кнопка «Поделиться» в «О приложении»)
         buildConfigField("String", "APK_URL", "\"\"")

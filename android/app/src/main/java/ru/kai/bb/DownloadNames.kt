@@ -12,20 +12,32 @@ object DownloadNames {
         "application/pdf" to "pdf",
         "application/zip" to "zip",
         "application/x-rar-compressed" to "rar",
+        "application/vnd.rar" to "rar",
+        "application/x-7z-compressed" to "7z",
         "text/plain" to "txt",
+        "text/html" to "html",
         "text/csv" to "csv",
+        "application/json" to "json",
         "application/msword" to "doc",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" to "docx",
         "application/vnd.ms-powerpoint" to "ppt",
         "application/vnd.openxmlformats-officedocument.presentationml.presentation" to "pptx",
         "application/vnd.ms-excel" to "xls",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" to "xlsx",
+        "application/vnd.oasis.opendocument.text" to "odt",
+        "application/rtf" to "rtf",
         "image/jpeg" to "jpg",
         "image/png" to "png",
         "image/gif" to "gif",
+        "image/webp" to "webp",
+        "image/svg+xml" to "svg",
         "video/mp4" to "mp4",
+        "video/quicktime" to "mov",
+        "video/webm" to "webm",
         "audio/mpeg" to "mp3",
         "audio/mp4" to "m4a",
+        "audio/wav" to "wav",
+        "application/octet-stream" to "bin",
     )
 
     fun extensionFor(mime: String?): String? {
@@ -64,8 +76,10 @@ object DownloadNames {
         val withoutQuery = url.substringBefore('#').substringBefore('?')
         val afterScheme = if ("://" in withoutQuery) withoutQuery.substringAfter("://") else withoutQuery
         val slash = afterScheme.indexOf('/')
-        if (slash < 0 || slash == afterScheme.length - 1) return null
-        val path = afterScheme.substring(slash + 1)
+        if (slash < 0) return null
+        // хвостовой «/» отбрасываем: у /webapps/login/ имя должно быть login, а не пустым
+        val path = afterScheme.substring(slash + 1).trim('/')
+        if (path.isEmpty()) return null
         val last = if ('/' in path) path.substringAfterLast('/') else path
         if (last.isBlank()) return null
         return percentDecode(last)

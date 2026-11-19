@@ -150,8 +150,13 @@ fun BrowserScreen(prefs: SitePrefs) {
             if (title.isNotBlank()) pageTitle = title
         }
         bridge.onPageError = { message ->
-            errorMsg = message?.takeIf { it.isNotBlank() } ?: context.getString(R.string.error_title)
-            loadedOnce = true
+            // null = ошибки нет (так же вызывается перед каждой загрузкой), "" = ошибка без описания
+            if (message == null) {
+                errorMsg = null
+            } else {
+                errorMsg = message.ifBlank { context.getString(R.string.error_title) }
+                loadedOnce = true
+            }
         }
         bridge.onToast = { message -> scope.launch { snackbar.showSnackbar(message) } }
         bridge.onDownload = { request -> startDownload(request) }
@@ -227,9 +232,6 @@ fun BrowserScreen(prefs: SitePrefs) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { bridge.reload() }) {
-                        Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.reload))
-                    }
                     IconButton(onClick = { sheetOpen = true }) {
                         Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.menu))
                     }
@@ -470,7 +472,10 @@ private fun SettingsSheet(
     onAbout: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

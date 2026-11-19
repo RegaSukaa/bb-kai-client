@@ -81,4 +81,15 @@ class DownloadNamesTest {
     fun keepsNameWithoutDuplicatingExtension() {
         assertEquals("lecture.pdf", DownloadNames.guess("https://bb.kai.ru/lecture.pdf", null, "application/pdf"))
     }
+
+    @Test
+    fun pageWithTrailingSlashTakesLastSegment() {
+        assertEquals("login.html", DownloadNames.guess("https://bb.kai.ru/webapps/login/", null, "text/html"))
+    }
+
+    @Test
+    fun rootUrlFallsBackToGenericName() {
+        assertEquals("file.html", DownloadNames.guess("https://bb.kai.ru/", null, "text/html"))
+        assertEquals("file", DownloadNames.guess("https://bb.kai.ru/", null, null))
+    }
 }
