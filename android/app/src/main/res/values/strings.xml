@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Blackboard КАИ</string>
+    <string name="site_host">bb.kai.ru</string>
+    <string name="loading">Загрузка…</string>
+    <string name="retry">Повторить</string>
+    <string name="error_title">Не удалось открыть страницу</string>
+    <string name="error_hint">Проверьте интернет и попробуйте ещё раз. Если сайт открывается в браузере, а здесь нет — нажмите «Обновить» через минуту.</string>
+    <string name="back">Назад</string>
+    <string name="forward">Вперёд</string>
+    <string name="reload">Обновить</string>
+    <string name="home">Главная</string>
+    <string name="menu">Настройки</string>
+    <string name="settings">Настройки</string>
+    <string name="site_view">Вид сайта</string>
+    <string name="view_mobile">Мобильный</string>
+    <string name="view_desktop">Компьютерный</string>
+    <string name="view_hint">Если вёрстка курса «поехала» — включите компьютерный вид и обновите страницу.</string>
+    <string name="text_size">Размер текста</string>
+    <string name="open_in_browser">Открыть в браузере</string>
+    <string name="download_page">Скачать страницу</string>
+    <string name="logout">Выйти из аккаунта</string>
+    <string name="logout_title">Выйти из аккаунта?</string>
+    <string name="logout_text">Приложение забудет сессию и куки сайта. Введённые логин и пароль в приложении не хранятся.</string>
+    <string name="about">О приложении</string>
+    <string name="about_text">Неофициальный клиент учебного портала КНИТУ-КАИ (Blackboard Learn). Работает как оболочка над сайтом bb.kai.ru: логин, курсы, задания, тесты, оценки, вебинары — всё внутри приложения.</string>
+    <string name="about_legal">Blackboard Learn™ — торговая марка Blackboard Inc. Приложение не связано с Blackboard Inc. и КНИТУ-КАИ.</string>
+    <string name="share_app">Поделиться приложением</string>
+    <string name="version">Версия</string>
+    <string name="ok">Понятно</string>
+    <string name="cancel">Отмена</string>
+    <string name="downloading">Скачивание: %1$s…</string>
+    <string name="download_done">Сохранено в «Загрузки/Blackboard»: %1$s</string>
+    <string name="download_failed">Не удалось скачать файл: %1$s</string>
+    <string name="open_file">Открыть</string>
+    <string name="no_app_for_file">Нет приложения, чтобы открыть этот файл</string>
+    <string name="no_browser">Не нашлось браузера</string>
+    <string name="exit_hint">Нажмите «Назад» ещё раз, чтобы выйти</string>
+    <string name="media_permission">Нужен доступ к камере и микрофону для вебинара</string>
+    <string name="pick_file">Выберите файл для загрузки</string>
+</resources>
